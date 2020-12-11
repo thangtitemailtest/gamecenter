@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\countries;
 use App\Model\eventname;
 use App\Model\games;
 use Illuminate\Http\Request;
@@ -444,6 +445,9 @@ class ReportController extends Controller
 		$log = new logevent();
 		$listColumnLog = $log->getColumn();
 
+		$country_obj = new countries();
+		$country_array = $country_obj->getListCountryAraay();
+
 		if (empty($params['time'])) {
 			$input = [
 				'eventname' => '',
@@ -451,7 +455,7 @@ class ReportController extends Controller
 				'time' => 'homnay',
 				'gameid' => ''
 			];
-			return view('report.logevent', compact('input', 'listEventname', 'listColumnLog', 'listGame'));
+			return view('report.logevent', compact('input', 'listEventname', 'listColumnLog', 'listGame', 'country_array'));
 		} else {
 			$input = $params;
 		}
@@ -461,7 +465,42 @@ class ReportController extends Controller
 
 		$logpagi = $logevent->paginate(50);
 
-		return view('report.logevent', compact('input', 'logpagi', 'listEventname', 'listColumnLog', 'listGame'));
+		return view('report.logevent', compact('input', 'logpagi', 'listEventname', 'listColumnLog', 'listGame', 'country_array'));
+	}
+
+	public function getXemdanhsachlog(Request $request)
+	{
+		$params = $request->all();
+
+		$game = new games();
+		$listGame = $game->getListGame();
+
+		$eventname = new eventname();
+		$listEventname = $eventname->getListeventname();
+
+		$log = new logevent();
+		$listColumnLog = $log->getColumn();
+
+		$country_obj = new countries();
+		$country_array = $country_obj->getListCountryAraay();
+
+		if (empty($params['time'])) {
+			$input = [
+				'eventname' => '',
+				'time' => 'ngay',
+				'gameid' => ''
+			];
+			return view('report.xemdanhsachlog', compact('input', 'listColumnLog', 'listGame', 'country_array', 'listEventname'));
+		} else {
+			$input = $params;
+		}
+
+
+		$logevent = $log->LogLogevent($input)->get();
+
+		$logpagi = $logevent->paginate(100);
+
+		return view('report.xemdanhsachlog', compact('input', 'logpagi', 'listColumnLog', 'listGame', 'country_array', 'listEventname'));
 	}
 
 }

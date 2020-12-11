@@ -54,8 +54,12 @@ Route::middleware('Checklogin')->group(function () {
 		//Route::get('/locsonguoiupgradebulletpower', 'ReportController@getLocsonguoiupgradebulletpower')->name('get-locsonguoiupgradebulletpower');
 		Route::get('/quocgiacosologinnhieunhat', 'ReportController@getQuocgiacosologinnhieunhat')->name('get-quocgiacosologinnhieunhat');
 		//Route::get('/locsonguoichoigamelandau', 'ReportController@getLocsonguoichoigamelandau')->name('get-locsonguoichoigamelandau');
-		Route::get('/testrandom', 'ReportController@testrandom')->name('get-testrandom');
+
 		Route::get('/logevent', 'ReportController@getLogevent')->name('get-logevent');
+		Route::get('/xemdanhsachlog', 'ReportController@getXemdanhsachlog')->name('get-xemdanhsachlog');
+
+
+		Route::get('/testrandom', 'ReportController@testrandom')->name('get-testrandom');
 	});
 	/*END Report*/
 });

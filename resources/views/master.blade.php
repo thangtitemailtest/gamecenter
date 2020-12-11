@@ -166,6 +166,10 @@
                     @if(in_array('report/logevent',$permission) || $permission[0] == 'admin')
                         <a class="collapse-item" href="{{route('get-logevent')}}">Log event</a>
                     @endif
+
+                    @if(in_array('report/xemdanhsachlog',$permission) || $permission[0] == 'admin')
+                        <a class="collapse-item" href="{{route('get-xemdanhsachlog')}}">Xem danh sách log event</a>
+                    @endif
                 </div>
             </div>
         </li>

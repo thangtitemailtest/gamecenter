@@ -207,6 +207,17 @@ class logevent extends Model
 					$log->where($join . 'createdate', '<', $to);
 
 					break;
+				case "ngay":
+					if (isset($input['date']) && !empty($input['date'])) {
+						$today = $input['date'];
+						$from = $today . " 00:00:00";
+						$to = $today . " 23:59:59";
+
+						$log->where($join . 'createdate', '>', $from);
+						$log->where($join . 'createdate', '<', $to);
+					}
+
+					break;
 				default :
 					break;
 			}

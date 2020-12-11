@@ -11,7 +11,7 @@
         <!-- Content Row -->
         <div class="card shadow mb-4">
             <div class="card-body">
-                <form action="{{ route('get-logevent') }}" method="GET" class="mb-5" id="filter-frm">
+                <form action="{{ route('get-xemdanhsachlog') }}" method="GET" class="mb-5" id="filter-frm">
                     <div class="row">
                         <div class="col-sm-3" style="height:85px">
                             <div class="form-group input-group-sm">
@@ -24,15 +24,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-sm-4" style="height:85px;">
-                            <div class="form-group input-group-sm">
-                                <label class="radio-inline mr-3">
-                                    Deviceid
-                                </label>
-                                <input type="text" name="deviceid" class="form-control" id="deviceid" title="Từ ngày"
-                                       value="{{!empty($input['deviceid']) ? $input['deviceid'] : ''}}">
-                            </div>
-                        </div>
+
                         <div class="col-sm-3" style="height:85px">
                             <div class="form-group input-group-sm">
                                 <label class="radio-inline mr-3">Eventname</label>
@@ -44,36 +36,16 @@
                                 </select>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
+
                         <div class="col-sm-3" style="height:85px">
                             <div class="form-group input-group-sm">
                                 <label class="radio-inline mr-3">
-                                    <input type="radio" name="time" id="time-0" onchange="changeRadio('homnay')"
-                                           value="homnay" {{$input['time'] == 'homnay' || empty($input['time']) ? 'checked' : ''}}>&nbsp;Hôm
-                                    nay</label>
-                            </div>
-                        </div>
-                        <div class="col-sm-3" style="height:85px">
-                            <div class="form-group input-group-sm">
-                                <label class="radio-inline mr-3">
-                                    <input type="radio" name="time" id="time-1" onchange="changeRadio('week')"
-                                           value="week" {{$input['time'] == 'week' ? 'checked' : ''}}>&nbsp;Theo
-                                    tuần
+                                    <input type="radio" name="time" id="time-2" onchange="changeRadio('ngay')"
+                                           {{$input['time'] == 'ngay' && !empty($input['time']) ? 'checked' : ''}}
+                                           value="ngay">&nbsp;Theo ngày
                                 </label>
-                                <input type="week" name="week" class="form-control" id="week"
-                                       value="{{!empty($input['week']) ? $input['week'] : ''}}">
-                            </div>
-                        </div>
-                        <div class="col-sm-3" style="height:85px">
-                            <div class="form-group input-group-sm">
-                                <label class="radio-inline mr-3">
-                                    <input type="radio" name="time" id="time-2" onchange="changeRadio('month')"
-                                           {{$input['time'] == 'month' && !empty($input['time']) ? 'checked' : ''}}
-                                           value="month">&nbsp;Theo tháng
-                                </label>
-                                <input type="month" name="month" class="form-control" id="month"
-                                       value="{{!empty($input['month']) ? $input['month'] : ''}}">
+                                <input type="date" name="date" class="form-control" id="date"
+                                       value="{{!empty($input['ngay']) ? $input['ngay'] : date('Y-m-d')}}">
                             </div>
                         </div>
                         <div class="col-sm-3" style="height:85px;">
@@ -148,7 +120,7 @@
                             <thead>
                             <tr>
                                 @foreach($listColumnLog as $key_col => $item_col)
-                                    @if($item_col != 'id' && $item_col != 'deviceid' && $item_col != 'game_id')
+                                    @if($item_col != 'id' && $item_col != 'game_id')
                                         <th>{{$item_col}}</th>
                                     @endif
                                 @endforeach
@@ -160,7 +132,7 @@
                                 @foreach($logpagi as $key => $item)
                                     <tr>
                                         @foreach($listColumnLog as $key_col => $item_col)
-                                            @if($item_col != 'id' && $item_col != 'deviceid' && $item_col != 'game_id')
+                                            @if($item_col != 'id' && $item_col != 'game_id')
                                                 @if($item_col == 'country')
                                                     <td>{{isset($country_array[strtoupper($item->$item_col)]) ? $country_array[strtoupper($item->$item_col)] : $item->$item_col}}</td>
                                                 @else
@@ -196,32 +168,19 @@
     <script>
 
         $(function () {
-            changeRadio('{{empty($input['time']) ? 'homnay' : $input['time']}}');
+            changeRadio('{{empty($input['time']) ? 'ngay' : $input['time']}}');
 
             $(".contable").floatingScroll();
         });
 
         function changeRadio(time) {
-            if (time == 'homnay') {
-                $('#week').attr('disabled', 'disabled');
-                $('#month').attr('disabled', 'disabled');
-                $('#from-date').attr('disabled', 'disabled');
-                $('#to-date').attr('disabled', 'disabled');
-            } else if (time == 'week') {
-                $('#week').removeAttr('disabled');
+            if (time == 'ngay') {
+                $('#ngay').removeAttr('disabled');
 
-                $('#month').attr('disabled', 'disabled');
-                $('#from-date').attr('disabled', 'disabled');
-                $('#to-date').attr('disabled', 'disabled');
-            } else if (time == 'month') {
-                $('#month').removeAttr('disabled');
-
-                $('#week').attr('disabled', 'disabled');
                 $('#from-date').attr('disabled', 'disabled');
                 $('#to-date').attr('disabled', 'disabled');
             } else if (time == 'tuychon') {
-                $('#month').attr('disabled', 'disabled');
-                $('#week').attr('disabled', 'disabled');
+                $('#ngay').attr('disabled', 'disabled');
 
                 $('#from-date').removeAttr('disabled');
                 $('#to-date').removeAttr('disabled');
@@ -235,19 +194,8 @@
                 makeAlertright('Vui lòng chọn Game.', 3000);
                 return;
             }
-
-            if ($('#deviceid').val() == '') {
-                makeAlertright('Vui lòng nhập Deviceid.', 3000);
-                return;
-            }
-
-            if ($('#time-1').is(':checked') === true && $('#week').val() == '') {
-                makeAlertright('Vui lòng chọn Tuần.', 3000);
-                return;
-            }
-
-            if ($('#time-2').is(':checked') === true && $('#month').val() == '') {
-                makeAlertright('Vui lòng chọn Tháng.', 3000);
+            if ($('#time-2').is(':checked') === true && $('#ngay').val() == '') {
+                makeAlertright('Vui lòng chọn Ngày.', 3000);
                 return;
             }
 
