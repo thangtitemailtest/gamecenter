@@ -13,6 +13,8 @@ class ReportController extends Controller
 
 	function getUserconlaisaulevel(Request $request)
 	{
+		ini_set("memory_limit","-1");
+
 		$params = $request->all();
 
 		$game = new games();
@@ -56,6 +58,8 @@ class ReportController extends Controller
 
 	function getSotiencuausertheolevel(Request $request)
 	{
+		ini_set("memory_limit","-1");
+
 		$params = $request->all();
 
 		$game = new games();
@@ -94,6 +98,8 @@ class ReportController extends Controller
 
 	function getLocsonguoichoipass(Request $request)
 	{
+		ini_set("memory_limit","-1");
+
 		$params = $request->all();
 
 		$game = new games();
@@ -143,6 +149,8 @@ class ReportController extends Controller
 
 	function getLocsonguoichoistart(Request $request)
 	{
+		ini_set("memory_limit","-1");
+
 		$params = $request->all();
 
 		$game = new games();
@@ -192,6 +200,8 @@ class ReportController extends Controller
 
 	function getLocsonguoichoilose(Request $request)
 	{
+		ini_set("memory_limit","-1");
+
 		$params = $request->all();
 
 		$game = new games();
@@ -241,6 +251,8 @@ class ReportController extends Controller
 
 	function getLocsotiennguoichoipass(Request $request)
 	{
+		ini_set("memory_limit","-1");
+
 		$params = $request->all();
 
 		$game = new games();
@@ -295,6 +307,8 @@ class ReportController extends Controller
 
 	function getLocsotiennguoichoilose(Request $request)
 	{
+		ini_set("memory_limit","-1");
+
 		$params = $request->all();
 
 		$game = new games();
@@ -349,6 +363,8 @@ class ReportController extends Controller
 
 	function getQuocgiacosologinnhieunhat(Request $request)
 	{
+		ini_set("memory_limit","-1");
+
 		$params = $request->all();
 
 		$game = new games();
@@ -394,6 +410,8 @@ class ReportController extends Controller
 
 	function getLevelusermuainapp(Request $request)
 	{
+		ini_set("memory_limit","-1");
+
 		$params = $request->all();
 
 		$game = new games();
@@ -434,6 +452,8 @@ class ReportController extends Controller
 
 	function getLogevent(Request $request)
 	{
+		ini_set("memory_limit","-1");
+
 		$params = $request->all();
 
 		$game = new games();
@@ -470,6 +490,8 @@ class ReportController extends Controller
 
 	public function getXemdanhsachlog(Request $request)
 	{
+		ini_set("memory_limit","-1");
+
 		$params = $request->all();
 
 		$game = new games();
